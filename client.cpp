@@ -51,7 +51,10 @@ void stream_file_bytes(int fd, const char* source_path, ssize_t file_size) {
         }
 
         total_bytes += bytes_read;
-        std::cout << "Progress: " << total_bytes << "/" << file_size << " bytes..." << std::endl;
+        // display progress of trasnfer
+        float percent = ((float) total_bytes / file_size) * 100;
+        printf("\r[%.2f%%] Transferring: %ld/%ld bytes", percent, total_bytes, file_size);
+        fflush(stdout);
     }
 
     fclose(file_ptr);
