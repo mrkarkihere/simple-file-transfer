@@ -58,7 +58,38 @@ void stream_file_bytes(int fd, const char* source_path, ssize_t file_size) {
 }
 
 //
-int main() {
+int validate_cli(int argc, char** argv){
+    // need source + destination
+    if(argc < 3){
+        std::cout << "Usage: " << argv[0] << " <source> <destination>" << std::endl;
+        return -1;
+    }
+    const char* source = argv[1];
+    FILE* file_ptr = fopen(source, "rb");
+    if(file_ptr == nullptr){
+        std::cerr << "Source file not found: " << source << std::endl;
+        return -1;
+    }
+
+    fclose(file_ptr);
+    return 0;
+}
+
+//
+int main(int argc, char* argv[]) {
+    /*
+        i guess i'll do it like scp, template:
+        scp source destination
+
+        EXAMPLE: ./client ../plaintext.txt /destination/output.txt
+    */
+    if(validate_cli(argc, &argv[0]) != 0){
+        return 1;
+    }
+
+    const char* source = argv[1]; // "source/plaintext.txt"
+    const char* destination = argv[2]; // "destination/output.txt"
+    
     const char* server_ip = "127.0.0.1";
     int port = 8080;
 
@@ -67,10 +98,7 @@ int main() {
     if (client_fd != -1) {
         std::cout << "Successfully connected to server!" << std::endl;
 
-        // test, move to cli arg later
-        const char* source = "source/plaintext.txt";
-        const char* destination = "destination/output.txt";
-
+        // file metadat, update this to use FTP standrd protocol
         struct file_header file_metadata;
         strncpy(file_metadata.source, source, sizeof(file_metadata.source));
         strncpy(file_metadata.destination, destination, sizeof(file_metadata.destination));

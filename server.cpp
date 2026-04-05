@@ -81,7 +81,7 @@ void handle_client(int fd, struct sockaddr_in addr, socklen_t addrlen){
     close(fd);
 }
 
-
+//
 int main(){
     int server_fd = init_server(8080);
     

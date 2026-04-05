@@ -15,4 +15,4 @@ struct file_header{
     ssize_t file_size;
 };
 
-#define CHUNK_SIZE 1
+#define CHUNK_SIZE 256
