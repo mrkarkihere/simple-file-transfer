@@ -1,7 +1,6 @@
 #include "shared.h"
 #include <thread>
 
-
 int init_server(int port) {
     // create the socket
     int server_fd = socket(AF_INET, SOCK_STREAM, 0); // ipv4, TCP, default (tcp)
@@ -11,7 +10,7 @@ int init_server(int port) {
     struct sockaddr_in serveraddr;
     serveraddr.sin_family = AF_INET; // tcp
     serveraddr.sin_port = htons(port); 
-    serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // cli arg in the future
+    serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // assign an address to listen in
     if(bind(server_fd, (struct sockaddr*) &serveraddr, sizeof(serveraddr)) == -1){
